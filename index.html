@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Allon Fasaha</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/animate.min.css" rel="stylesheet">
+  <link href="css/lightbox.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <link href="css/responsive.css" rel="stylesheet">
+
+  <!--[if lt IE 9]>
+	    <script src="js/html5shiv.js"></script>
+	    <script src="js/respond.min.js"></script>
+    <![endif]-->
+  <link rel="shortcut icon" href="images/logo.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+  
+  <style>
+      .videoCont {
+        position: relative;
+        max-height: 830px;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        }
+        
+        .videoCont video {
+        width: 700px;
+        max-height: 475px;
+        max-width: 100%;
+        outline: none;
+        border-radius: 15px;
+        margin-bottom: -5px;
+        transition: all .7s ease;
+        }
+        .kaka h1 {
+            margin-top: 10px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            font-family: hoop;
+            color: #115c83;
+            font-size: 4.5em;
+        }
+        .videoCont:hover #player-controls {
+          display: block;
+        }
+        
+        .videoCont #player-controls {
+          position: absolute;
+          width: 100%;
+          top: 40%;
+          display: none;
+        }
+        
+        .videoCont #player-controls .pausepl {
+          cursor: pointer;
+        }
+        
+        .theSeekbarCont {
+          margin-top: 70px;
+          display: flex;
+          justify-content: center;
+        }
+        
+        .vidTime {
+          color: #fff;
+          margin-top: 10px !important;
+        }
+        
+        .counter-video {
+          float: right;
+          margin-bottom: 1rem;
+          margin-right: 10rem !important;
+          font-size: 18px;
+          color: #a9abb1;
+        }
+        .gallery {
+          line-height: 0;
+          -webkit-column-count: 3; /* split it into 5 columns */
+          -webkit-column-gap: 3px; /* give it a 5px gap between columns */
+          -moz-column-count: 3;
+          -moz-column-gap: 4px;
+          column-count: 3;
+          column-gap: 4px;
+        }
+        .gallery img {
+          width: 100% !important;
+          height: 250px !important;
+          margin-bottom: 5px; /* to match column gap */
+           /*filter: grayscale(100%); */
+          transition: filter 2s;
+        }
+        .gallery img:hover {
+          filter: none;
+          cursor: pointer;
+        }
+        @media (max-width: 1200px) {
+          .gallery {
+            -moz-column-count: 4;
+            -webkit-column-count: 4;
+            column-count: 4;
+          }
+        }
+        @media (max-width: 1000px) {
+          .gallery {
+            -moz-column-count: 3;
+            -webkit-column-count: 3;
+            column-count: 3;
+          }
+        }
+        @media (max-width: 800px) {
+          .gallery {
+            -moz-column-count: 2;
+            -webkit-column-count: 2;
+            column-count: 2;
+          }
+        }
+        @media (max-width: 400px) {
+          .gallery {
+            -moz-column-count: 1;
+            -webkit-column-count: 1;
+            column-count: 1;
+          }
+        }
+        
+        #playbounce {
+            -webkit-animation:bounce 1s infinite;
+            cursor: pointer;
+        }
+         @-webkit-keyframes bounce {
+          0%       { margin-bottom:5px; }
+          25%, 75% { margin-bottom:15px; }
+          50%      { margin-bottom:20px; }
+          100%     { margin-bottom:0;}
+        }
+    .modal-content {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+  </style>
+</head>
+<!--/head-->
+
+<body>
+    
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-dialog-center modal-lg" role="document">
+        <div class="modal-content">
+        
+          <div class="modal-body">
+            <div class="videoCont">
+                <!--<video id="video">-->
+                <!-- <source preload="none" src="vid1.mp4" id="source" type="video/mp4" />-->
+                <!--</video> -->
+                <video id="video" oncontextmenu="return false;" controlslist="nodownload" poster="https://media.publit.io/file/w_1280/Demo-2of2-1.jpg"   playsinline ><source src="https://media.publit.io/file/h_480/Demo-2of2-1.webm" type="video/webm"><source src="https://media.publit.io/file/h_480/Demo-2of2-1.mp4" type="video/mp4"><source src="https://media.publit.io/file/h_480/Demo-2of2-1.ogv" type="video/ogv"></video>
+                <div id="player-controls">
+                  <div class="d-flex justify-content-center">
+                    <svg id="playbtn" class="pausepl" width="105" height="107" viewBox="0 0 105 107" fill="none">
+                      <mask id="mask0" maskUnits="userSpaceOnUse" x="0" y="0" width="105" height="107">
+                        <path d="M0.0212402 0.0323792H104.996V106.988H0.0212402V0.0323792Z" fill="#C4C4C4"></path>
+                      </mask>
+                      <g mask="url(#mask0)">
+                        <path d="M12.0762 86.591L12.0756 86.5905C0.519421 76.0824 -1.08859 56.5296 4.58991 38.8218C10.2654 21.1233 23.1498 5.49618 40.2936 2.78448C56.8516 0.21186 74.7845 11.3968 86.9858 26.9759C93.0768 34.7532 97.7119 43.5946 100.013 52.2978C102.315 61.0027 102.276 69.5412 99.0614 76.7426C92.6063 91.2024 77.9301 100.102 61.3014 102.163C44.6769 104.224 26.1539 99.439 12.0762 86.591Z" fill="white" stroke="#FCFBF9" stroke-width="0.80464" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M42.6137 66.9226C42.6102 67.5526 43.2993 67.9421 43.8372 67.6141L63.2771 55.7618C63.7889 55.4498 63.7921 54.7079 63.2832 54.3915L43.9759 42.3857C43.4416 42.0535 42.7499 42.4354 42.7464 43.0645L42.6137 66.9226Z" fill="#EA7052"></path>
+                      </g>
+                    </svg>
+                    <svg id="pausebtn" class="pausepl" width="105" height="107" viewBox="0 0 105 107" fill="none">
+                      <mask id="mask0" maskUnits="userSpaceOnUse" x="0" y="0" width="105" height="107">
+                        <path d="M0.0212402 0.0323792H104.996V106.988H0.0212402V0.0323792Z" fill="#C4C4C4"></path>
+                      </mask>
+                      <g mask="url(#mask0)">
+                        <path d="M13.0762 86.591L13.0756 86.5905C1.51942 76.0824 -0.0885944 56.5296 5.58991 38.8218C11.2654 21.1233 24.1498 5.49618 41.2936 2.78448C57.8516 0.21186 75.7845 11.3968 87.9858 26.9759C94.0768 34.7532 98.7119 43.5946 101.013 52.2978C103.315 61.0027 103.276 69.5412 100.061 76.7426C93.6063 91.2024 78.9301 100.102 62.3014 102.163C45.6769 104.224 27.1539 99.439 13.0762 86.591Z" fill="white" stroke="#FCFBF9" stroke-width="0.80464" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <rect x="41.5" y="43.5" width="8.24" height="23.3871" rx="1.5" fill="#EA7052" stroke="#EA7052">
+                        </rect>
+                        <rect x="53.26" y="43.5" width="8.24" height="23.3871" rx="1.5" fill="#EA7052" stroke="#EA7052">
+                        </rect>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="theSeekbarCont row d-flex justify-content-center">
+                    <div class="col-md-10 row" style="flex-wrap: nowrap; display: flex; justify-content: center;">
+                      <p id="startTime" class="col-sm-1 vidTime">0:00</p>
+                      <input id="seekbar" class="col-sm-7 seekbar" type="range" min="0" max="100"></input>
+                      <p id="remainTime" class="col-sm-1 vidTime">0:00</p>
+                      <i class="fas fa-expand" onclick="fullscreen()" class="expando col-sm-1" style="color: #fff; margin-top: 15px; cursor: pointer;"></i>
+                    </div>
+                  </div>
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  <!--  <div class="two"></div>-->
+  <!--<div class="three"></div>-->
+  <!--<div class="four"></div>-->
+  <!--<div class="five"></div>-->
+  <!--<div class="one"></div>-->
+  <header id="header">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 overflow">
+
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-inverse" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <a class="navbar-brand" href="index.html">
+            <h1><img src="images/logo2.png" width="150" height="70" alt="logo"></h1>
+          </a>
+
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a href="#gallery" style="font-size: 20px; text-transform: capitalize">Gallery</a>
+            </li>  
+            <a href="#download" class="btn getbtn">Get Started</a>
+
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </header>
+  <!--/#header-->
+    
+  <section id="home-slider">
+    <div class="container">
+      <div class="row">
+        <div class="main-slider">
+          <div class="slide-text">
+            <!--<h1>Allon-Fasaha</h1>-->
+            <p><span id="typed" class="trans-text"></span></p>
+          </div>
+          <div style="display: flex; justify-content: center; margin-top: 30px">
+            <svg id="playbounce" data-toggle="modal" data-target="#videoModal" class="pausepl" width="105" height="107" viewBox="0 0 105 107" fill="blue">
+              <mask id="mask0" maskUnits="userSpaceOnUse" x="0" y="0" width="105" height="107">
+                <path d="M0.0212402 0.0323792H104.996V106.988H0.0212402V0.0323792Z" fill="#115c83"></path>
+              </mask>
+              <g mask="url(#mask0)">
+                <path d="M12.0762 86.591L12.0756 86.5905C0.519421 76.0824 -1.08859 56.5296 4.58991 38.8218C10.2654 21.1233 23.1498 5.49618 40.2936 2.78448C56.8516 0.21186 74.7845 11.3968 86.9858 26.9759C93.0768 34.7532 97.7119 43.5946 100.013 52.2978C102.315 61.0027 102.276 69.5412 99.0614 76.7426C92.6063 91.2024 77.9301 100.102 61.3014 102.163C44.6769 104.224 26.1539 99.439 12.0762 86.591Z" fill="#f7941d" stroke="#FCFBF9" stroke-width="0.80464" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M42.6137 66.9226C42.6102 67.5526 43.2993 67.9421 43.8372 67.6141L63.2771 55.7618C63.7889 55.4498 63.7921 54.7079 63.2832 54.3915L43.9759 42.3857C43.4416 42.0535 42.7499 42.4354 42.7464 43.0645L42.6137 66.9226Z" fill="#fff"></path>
+              </g>
+            </svg>
+          </div>        
+          <img src="images/home/slider/hill.png" class="slider-hill" alt="slider image">
+          <img src="images/home/musa.svg" class="slider-house" alt="slider image">
+          <img src="images/home/slider/sun.png" class="slider-sun" alt="slider image">
+          <img src="images/home/slider/birds1.png" class="slider-birds1" alt="slider image">
+          <img src="images/home/slider/birds2.png" class="slider-birds2" alt="slider image">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--/#home-slider-->
+
+  <section id="about">
+    <div class="container kaka">
+      <h1 style="color: #083351">Allon-Fasaha</h1>
+      <p>Allon Fasaha is for Out-of-School Children (Almajiri) who do not have
+        access to formal Education and lose out on future
+        opportunities. The Allon Fasaha platform is a mobile learning
+        platform that provides accelerated learning and integrates
+        the “Almajiri” back into the formal education system.</p>
+    </div>
+  </section>
+  <section>
+  </section>
+  <section id="download">
+      <div class="single-features" style="height: 100vh">
+        <div class="container" style="padding-top: 15%">
+            <div class="col-sm-8 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms" style="padding-left: 0; height: 100%">
+              <!--<div><div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><figure style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0;" ><iframe src="https://media.publit.io/file/firslaunchvideo-online-video-cutter.com.html" scrolling="no" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute; overflow:hidden;" allowfullscreen=""></iframe></figure></div></div>-->
+             <div class="videoCont">
+                <video id="video2" oncontextmenu="return false;" controlslist="nodownload" poster="https://media.publit.io/file/w_1280/Allon-Fasaha-Animated-Explainer-Video_2021.jpg"   playsinline ><source src="https://media.publit.io/file/h_480/Allon-Fasaha-Animated-Explainer-Video_2021.webm" type="video/webm"><source src="https://media.publit.io/file/h_480/Allon-Fasaha-Animated-Explainer-Video_2021.mp4" type="video/mp4"><source src="https://media.publit.io/file/h_480/Allon-Fasaha-Animated-Explainer-Video_2021.ogv" type="video/ogv"></video>
+                <div id="player-controls">
+                  <div class="d-flex justify-content-center">
+                    <svg id="playbtn2" class="pausepl" width="105" height="107" viewBox="0 0 105 107" fill="none">
+                      <mask id="mask0" maskUnits="userSpaceOnUse" x="0" y="0" width="105" height="107">
+                        <path d="M0.0212402 0.0323792H104.996V106.988H0.0212402V0.0323792Z" fill="#C4C4C4"></path>
+                      </mask>
+                      <g mask="url(#mask0)">
+                        <path d="M12.0762 86.591L12.0756 86.5905C0.519421 76.0824 -1.08859 56.5296 4.58991 38.8218C10.2654 21.1233 23.1498 5.49618 40.2936 2.78448C56.8516 0.21186 74.7845 11.3968 86.9858 26.9759C93.0768 34.7532 97.7119 43.5946 100.013 52.2978C102.315 61.0027 102.276 69.5412 99.0614 76.7426C92.6063 91.2024 77.9301 100.102 61.3014 102.163C44.6769 104.224 26.1539 99.439 12.0762 86.591Z" fill="white" stroke="#FCFBF9" stroke-width="0.80464" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M42.6137 66.9226C42.6102 67.5526 43.2993 67.9421 43.8372 67.6141L63.2771 55.7618C63.7889 55.4498 63.7921 54.7079 63.2832 54.3915L43.9759 42.3857C43.4416 42.0535 42.7499 42.4354 42.7464 43.0645L42.6137 66.9226Z" fill="#EA7052"></path>
+                      </g>
+                    </svg>
+                    <svg id="pausebtn2" class="pausepl" width="105" height="107" viewBox="0 0 105 107" fill="none">
+                      <mask id="mask0" maskUnits="userSpaceOnUse" x="0" y="0" width="105" height="107">
+                        <path d="M0.0212402 0.0323792H104.996V106.988H0.0212402V0.0323792Z" fill="#C4C4C4"></path>
+                      </mask>
+                      <g mask="url(#mask0)">
+                        <path d="M13.0762 86.591L13.0756 86.5905C1.51942 76.0824 -0.0885944 56.5296 5.58991 38.8218C11.2654 21.1233 24.1498 5.49618 41.2936 2.78448C57.8516 0.21186 75.7845 11.3968 87.9858 26.9759C94.0768 34.7532 98.7119 43.5946 101.013 52.2978C103.315 61.0027 103.276 69.5412 100.061 76.7426C93.6063 91.2024 78.9301 100.102 62.3014 102.163C45.6769 104.224 27.1539 99.439 13.0762 86.591Z" fill="white" stroke="#FCFBF9" stroke-width="0.80464" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <rect x="41.5" y="43.5" width="8.24" height="23.3871" rx="1.5" fill="#EA7052" stroke="#EA7052">
+                        </rect>
+                        <rect x="53.26" y="43.5" width="8.24" height="23.3871" rx="1.5" fill="#EA7052" stroke="#EA7052">
+                        </rect>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="theSeekbarCont row d-flex justify-content-center">
+                    <div class="col-md-10 row" style="flex-wrap: nowrap; display: flex; justify-content: center;">
+                      <p id="startTime2" class="col-sm-1 vidTime">0:00</p>
+                      <input id="seekbar2" class="col-sm-7 seekbar" type="range" min="0" max="100"></input>
+                      <p id="remainTime2" class="col-sm-1 vidTime">0:00</p>
+                      <i class="fas fa-expand" onclick="fullscreen2()" class="expando col-sm-1" style="color: #fff; margin-top: 15px; cursor: pointer;"></i>
+                    </div>
+                  </div>
+                </div>
+             </div>
+             
+            </div>
+            <div class="col-sm-4 wow fadeInRight haha" data-wow-duration="500ms" data-wow-delay="300ms">
+              <h2>Education For All</h2>
+              <P> When a Child has the opportunity to learn, It puts them on the road to reaching their full potential, the
+                chance to lead healthier lives, break the cycle of poverty and lift up their Families and Communities. They
+                have a chance to change the World.  <span style="font-weight: bold;"> - UNICEF</span></P>
+    
+              <div style="margin-top: 30px;">
+                <div class="col-md-12 offset-md-1">
+                  <div class="row" style=" margin-top: 50px;">
+                    <!--<a class="col-md-6" href="admin/" target="_blank">-->
+                    <!--  <div class="single-download-links">-->
+                    <!--    <div class="sdl-icon">-->
+                    <!--      <i class="fa fa-windows"></i>-->
+                    <!--    </div>-->
+                    <!--    <div class="sdl-content">-->
+                    <!--      <p>Login as</p>-->
+                    <!--      <h2>Admin</h2>-->
+                    <!--    </div>-->
+                    <!--  </div>-->
+                    <!--</a>-->
+    
+                    <a class="" href="Allon Fasaha.apk" download>
+                      <div class="single-download-links thesecond">
+                        <div class="sdl-icon">
+                          <i class="fa fa-android"></i>
+                        </div>
+                        <div class="sdl-content">
+                          <!--<p>For student</p>-->
+                          <h2>Download</h2>
+                        </div>
+                      </div>
+                    </a>
+    
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+  </section>
+    
+    <section id="gallery" class="container" style="height: 100vh; margin-top: 100px" >
+        <h1 style="color: #083351" class="text-center boonn">Gallery</h1>
+        <p style=" font-size: 1.5em; text-align: center; line-height: 30px;letter-spacing: 1px;">(Allon Fasaha Pilot Programme)</p>
+        <div class="gallery mt-5" style="margin-top: 50px">
+
+            <img src="images/image1.jpg">
+            <img src="images/image2.jpg">
+            <img src="images/image3.jpg">
+            <img src="images/image4.jpg">
+            <img src="images/image5.jpg">
+            <img src="images/image6.jpg">
+            <img src="images/image7.jpg">
+            <img src="images/image8.jpg">
+            <img src="images/image9.jpg">
+          </div>
+    </section>
+
+
+
+  <footer id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 text-center bottom-separator">
+          <img src="images/home/under.png" class="img-responsive inline" alt="">
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="testimonial bottom">
+
+
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="copyright-text text-center">
+            <p>&copy; Allon Fasaha 2021. Powered by <a href="https://steamledge.com/" target="_blank">Steamledge.</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--/#footer-->
+
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/lightbox.min.js"></script>
+  <script type="text/javascript" src="js/wow.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+  <script>
+      // videoControls
+
+    const video = document.getElementById('video')
+    const playBtn = document.getElementById("playbtn");
+    const pauseBtn = document.getElementById("pausebtn");
+    const seekbar = document.querySelector('#seekbar')
+    
+    const startTime = document.querySelector("#startTime")
+    const remainTime = document.getElementById("remainTime")
+    
+    const lesList = document.querySelectorAll("#lessonList .theLes");
+    const vidSource = document.getElementById("source")
+    lesList.forEach((les) => {
+        les.addEventListener("click", function () {
+            vidSource.setAttribute('src', 'videos/literacy/level_1/phonics/1/' + les.dataset.video + '.mp4')
+            video.load()
+            video.play()
+        })
+    })
+    
+    function convertHMS(value) {
+        const sec = parseInt(value, 10); // convert value to number if it's string
+        let hours = Math.floor(sec / 3600); // get hours
+        let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
+        let seconds = sec - (hours * 3600) - (minutes * 60); //  get seconds
+        // add 0 if value < 10; Example: 2 => 02
+        // if (hours < 10) { hours = "0" + hours; }
+        // if (minutes < 10) { minutes = "0" + minutes; }
+        if (seconds < 10) { seconds = "0" + seconds; }
+        if (hours === 0 || minutes === 0) {
+            return minutes + ':' + seconds;
+        } else {
+            return hours + ':' + minutes + ':' + seconds; // Return is HH : MM : SS
+        }
+    }
+    
+    video.addEventListener('timeupdate', () => {
+        seekbar.value = video.currentTime / video.duration * seekbar.max
+    
+        remainTime.innerHTML = convertHMS(video.duration)
+        startTime.innerHTML = convertHMS(video.currentTime)
+    
+    })
+    
+    seekbar.addEventListener('change', () => {
+        video.currentTime = video.duration * seekbar.value / seekbar.max
+    })
+    function fullscreen() {
+        if (video.requestFullScreen) {
+            video.requestFullScreen();
+        } else if (video.mozRequestFullScreen) {
+            video.mozRequestFullScreen();
+        } else if (video.webkitRequestFullScreen) {
+            video.webkitRequestFullScreen();
+        }
+    }
+    
+    $('#pausebtn').hide()
+    $('#playbtn').click(function () {
+        $(this).hide();
+        $('#pausebtn').show();
+    });
+    
+    $('#pausebtn').click(function () {
+        $(this).hide();
+        $('#playbtn').show();
+    });
+    
+    playBtn.addEventListener("click", play_vid)
+    function play_vid() {
+        video.play()
+    }
+    
+    pauseBtn.addEventListener("click", pause_vid)
+    function pause_vid() {
+        video.pause()
+    }
+
+    
+    // Circular Progress
+
+
+  </script>
+  <script>
+      // videoControls
+
+    const video2 = document.getElementById('video2')
+    const playBtn2 = document.getElementById("playbtn2");
+    const pauseBtn2 = document.getElementById("pausebtn2");
+    const seekbar2 = document.querySelector('#seekbar2')
+    
+    const startTime2 = document.querySelector("#startTime2")
+    const remainTime2 = document.getElementById("remainTime2")
+
+    
+    function convertHMS(value) {
+        const sec = parseInt(value, 10); // convert value to number if it's string
+        let hours = Math.floor(sec / 3600); // get hours
+        let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
+        let seconds = sec - (hours * 3600) - (minutes * 60); //  get seconds
+        // add 0 if value < 10; Example: 2 => 02
+        // if (hours < 10) { hours = "0" + hours; }
+        // if (minutes < 10) { minutes = "0" + minutes; }
+        if (seconds < 10) { seconds = "0" + seconds; }
+        if (hours === 0 || minutes === 0) {
+            return minutes + ':' + seconds;
+        } else {
+            return hours + ':' + minutes + ':' + seconds; // Return is HH : MM : SS
+        }
+    }
+    
+    video2.addEventListener('timeupdate', () => {
+        seekbar2.value = video2.currentTime / video2.duration * seekbar2.max
+    
+        remainTime2.innerHTML = convertHMS(video2.duration)
+        startTime2.innerHTML = convertHMS(video2.currentTime)
+    
+    })
+    
+    seekbar2.addEventListener('change', () => {
+        video2.currentTime = video2.duration * seekbar2.value / seekbar2.max
+    })
+    function fullscreen2() {
+        if (video2.requestFullScreen) {
+            video2.requestFullScreen();
+        } else if (video2.mozRequestFullScreen) {
+            video2.mozRequestFullScreen();
+        } else if (video2.webkitRequestFullScreen) {
+            video2.webkitRequestFullScreen();
+        }
+    }
+    
+    $('#pausebtn2').hide()
+    $('#playbtn2').click(function () {
+        $(this).hide();
+        $('#pausebtn2').show();
+    });
+    
+    $('#pausebtn2').click(function () {
+        $(this).hide();
+        $('#playbtn2').show();
+    });
+    
+    playBtn2.addEventListener("click", play_vid2)
+    function play_vid2() {
+        video2.play()
+    }
+    
+    pauseBtn2.addEventListener("click", pause_vid2)
+    function pause_vid2() {
+        video2.pause()
+    }
+
+    
+    // Circular Progress
+
+
+  </script>
+  <script>
+    $(function () {
+      var messages = [],
+        index = 0;
+
+      messages.push('Allon Fasaha provides personalized and accelerated learning outside the traditional classroom.');
+      messages.push('Allon Fasaha yana ba da kebabben ilimi a saukake cikin sauri a wajen da bama ajin makaranta ba.');
+
+
+      function cycle() {
+        $('.trans-text').html(messages[index]);
+        index++;
+
+        if (index === messages.length) {
+          index = 0;
+        }
+
+        setTimeout(cycle, 5000);
+      }
+
+      cycle();
+    });
+
+    $(function () {
+      var srcText = $("#typed").text();
+      var i = 0;
+      var result = srcText[i];
+      setInterval(function () {
+        if (i == srcText.length) {
+          clearInterval(this);
+          return;
+        };
+        i++;
+        result += srcText[i].replace("\n", "<br />");
+        $("#typed").html(result);
+      },
+        100); // the period between every character and next one, in milliseonds.
+    });
+
+
+
+  </script>
+  <script src="js/typed.js"></script>
+  
+</body>
+
+</html>
